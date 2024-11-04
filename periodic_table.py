@@ -22,5 +22,5 @@ def create_csv_files():
         with open('compounds.csv', 'w', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=['Compound Name', 'Base Elements', 'Proportions'])
             writer.writeheader()
-            writer.writerow({'Compound Name': '', 'Base Elements': ''})
+            writer.writerow({'Compound Name': 'Water', 'Base Elements': 'H2O', 'Proportions': '2 H, 1 O'})
             print("Created compounds.csv")
