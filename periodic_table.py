@@ -1,116 +1,3 @@
-Skip to content
-Navigation Menu
-benadelberg
-/
-Periodic_Table_Project
-
-Type / to search
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-Editing periodic_table.py in Periodic_Table_Project
-BreadcrumbsPeriodic_Table_Project
-/
-periodic_table.py
-in
-main
-
-Edit
-
-Preview
-Indent mode
-
-Spaces
-Indent size
-
-4
-Line wrap mode
-
-No wrap
-Editing periodic_table.py file contents
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
 import csv
 import os
 
@@ -161,7 +48,7 @@ def create_csv_files():
             writer.writerow({'Symbol': 'Zr', 'Name': 'Zirconium', 'Atomic Number': 40, 'Atomic Weight': 91.224})
             writer.writerow({'Symbol': 'Nb', 'Name': 'Niobium', 'Atomic Number': 41, 'Atomic Weight': 92.906})
             writer.writerow({'Symbol': 'Mo', 'Name': 'Molybdenum', 'Atomic Number': 42, 'Atomic Weight': 95.95})
-            writer.writerow({'Symbol': 'Tc', 'Name': 'Technetium', 'Atomic Number': 43, 'Atomic Weight': [97]})
+            writer.writerow({'Symbol': 'Tc', 'Name': 'Technetium', 'Atomic Number': 43, 'Atomic Weight': 97})
             writer.writerow({'Symbol': 'Ru', 'Name': 'Ruthenium', 'Atomic Number': 44, 'Atomic Weight': 101.07})
             writer.writerow({'Symbol': 'Rh', 'Name': 'Rhodium', 'Atomic Number': 45, 'Atomic Weight': 102.91})
             writer.writerow({'Symbol': 'Pd', 'Name': 'Palladium', 'Atomic Number': 46, 'Atomic Weight': 106.42})
@@ -188,5 +75,30 @@ def create_csv_files():
             writer.writerow({'Compound Name': 'Water', 'Base Elements': 'H2O', 'Proportions': '2 H, 1 O'})
             print("Created compounds.csv")
 
-Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.
-Codespaces 
+def load_elements(file_name):
+    elements = {}
+    with open(file_name, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            elements[row['Symbol']] = {
+                'name': row['Name'],
+                'atomic_number': int(row['Atomic Number']),
+                'atomic_weight': float(row['Atomic Weight'])
+            }
+    return elements
+
+def load_compounds(file_name):
+    compounds = []
+    with open(file_name, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            compounds.append({
+                'name': row['Compound Name'],
+                'elements': row['Base Elements'],
+                'proportions': row['Proportions']
+            })
+    return compounds
+
+def view_periodic_table(elements):
+    for symbol, details in elements.items():
+        print(f"{symbol}: {details['name']} (Atomic Number: {details['atomic_number']}, Atomic Weight: {details['atomic_weight']})")
