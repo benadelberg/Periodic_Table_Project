@@ -135,7 +135,7 @@ def menu(elements, compounds_file):
         elif choice == '2':
             compounds = load_compounds(compounds_file)
             for compound in compounds:
-                print(f"{compound['name']} is made of {compound['elements']} in proportions{compound['proportions']}")
+                print(f"{compound['name']} is made of {compound['elements']} in proportions {compound['proportions']}")
         elif choice == '3':
             compound = create_compound(elements)
             save_compound(compound, compounds_file)
