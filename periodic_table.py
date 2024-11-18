@@ -48,7 +48,7 @@ def create_csv_files():
             writer.writerow({'Symbol': 'Zr', 'Name': 'Zirconium', 'Atomic Number': 40, 'Atomic Weight': 91.224})
             writer.writerow({'Symbol': 'Nb', 'Name': 'Niobium', 'Atomic Number': 41, 'Atomic Weight': 92.906})
             writer.writerow({'Symbol': 'Mo', 'Name': 'Molybdenum', 'Atomic Number': 42, 'Atomic Weight': 95.95})
-            writer.writerow({'Symbol': 'Tc', 'Name': 'Technetium', 'Atomic Number': 43, 'Atomic Weight': [97]})
+            writer.writerow({'Symbol': 'Tc', 'Name': 'Technetium', 'Atomic Number': 43, 'Atomic Weight': 97})
             writer.writerow({'Symbol': 'Ru', 'Name': 'Ruthenium', 'Atomic Number': 44, 'Atomic Weight': 101.07})
             writer.writerow({'Symbol': 'Rh', 'Name': 'Rhodium', 'Atomic Number': 45, 'Atomic Weight': 102.91})
             writer.writerow({'Symbol': 'Pd', 'Name': 'Palladium', 'Atomic Number': 46, 'Atomic Weight': 106.42})
@@ -119,3 +119,36 @@ def save_compound(compound, file_name):
     with open(file_name, 'a', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=['Compound Name', 'Base Elements', 'Proportions'])
         writer.writerow(compound)
+
+def menu(elements, compounds_file):
+    while True:
+        print("\nMenu:")
+        print("1. View Periodic Table")
+        print("2. View Compounds")
+        print("3. Create New Compound")
+        print("4. Break Down Compound")
+        print("5. Exit")
+
+        choice = input("Choose an option: ")
+        if choice == '1':
+            view_periodic_table(elements)
+        elif choice == '2':
+            compounds = load_compounds(compounds_file)
+        elif choice == '3':
+            compound = create_compound(elements)
+        elif choice == '4':
+            pass
+        elif choice == '5':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice, please try again.")
+
+if __name__ == "__main__":
+    elements_file = 'periodic_table.csv'
+    compounds_file = 'compounds.csv'
+
+    create_csv_files()
+
+    elements = load_elements(elements_file)
+    menu(elements, compounds_file)
