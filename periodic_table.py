@@ -153,3 +153,52 @@ def load_compounds(file_name):
 def view_periodic_table(elements):
     for symbol, details in elements.items():
         print(f"{symbol}: {details['name']} (Atomic Number: {details['atomic_number']}, Atomic Weight: {details['atomic_weight']})")
+
+def create_compound(elements):
+    compound_name = input("Enter the name of the new compound: ")
+    compound_elements = input("Enter the elements (e.g., H2O): ")
+    proportions = input("Enter the proportions (e.g., 2 H, 1 O): ")
+
+    return {'Compound Name': compound_name, 'Base Elements': compound_elements, 'Proportions': proportions}
+
+# Save new compound to CSV
+def save_compound(compound, file_name):
+    with open(file_name, 'a', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=['Compound Name', 'Base Elements', 'Proportions'])
+        writer.writerow(compound)
+
+def menu(elements, compounds_file):
+    while True:
+        print("\nMenu:")
+        print("1. View Periodic Table")
+        print("2. View Compounds")
+        print("3. Create New Compound")
+        print("4. Break Down Compound")
+        print("5. Exit")
+
+        choice = input("Choose an option: ")
+        if choice == '1':
+            view_periodic_table(elements)
+        elif choice == '2':
+            compounds = load_compounds(compounds_file)
+            for compound in compounds:
+                print(f"{compound['name']} is made of {compound['elements']} in proportions {compound['proportions']}")
+        elif choice == '3':
+            compound = create_compound(elements)
+            save_compound(compound, compounds_file)
+        elif choice == '4':
+            pass
+        elif choice == '5':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice, please try again.")
+
+if __name__ == "__main__":
+    elements_file = 'periodic_table.csv'
+    compounds_file = 'compounds.csv'
+
+    create_csv_files()
+
+    elements = load_elements(elements_file)
+    menu(elements, compounds_file)
