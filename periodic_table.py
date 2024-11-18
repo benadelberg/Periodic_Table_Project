@@ -74,3 +74,48 @@ def create_csv_files():
             writer.writeheader()
             writer.writerow({'Compound Name': 'Water', 'Base Elements': 'H2O', 'Proportions': '2 H, 1 O'})
             print("Created compounds.csv")
+
+    # Load periodic table from CSV
+def load_elements(file_name):
+    elements = {}
+    with open(file_name, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            elements[row['Symbol']] = {
+                'name': row['Name'],
+                'atomic_number': int(row['Atomic Number']),
+                'atomic_weight': float(row['Atomic Weight'])
+            }
+    return elements
+
+# Load custom compounds
+def load_compounds(file_name):
+    compounds = []
+    with open(file_name, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            compounds.append({
+                'name': row['Compound Name'],
+                'elements': row['Base Elements'],
+                'proportions': row['Proportions']
+            })
+    return compounds
+
+# View periodic table
+def view_periodic_table(elements):
+    for symbol, details in elements.items():
+        print(f"{symbol}: {details['name']} (Atomic Number: {details['atomic_number']}, Atomic Weight: {details['atomic_weight']})")
+
+# Create new compound
+def create_compound(elements):
+    compound_name = input("Enter the name of the new compound: ")
+    compound_elements = input("Enter the elements (e.g., H2O): ")
+    proportions = input("Enter the proportions (e.g., 2 H, 1 O): ")
+
+    return {'Compound Name': compound_name, 'Base Elements': compound_elements, 'Proportions': proportions}
+
+# Save new compound to CSV
+def save_compound(compound, file_name):
+    with open(file_name, 'a', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=['Compound Name', 'Base Elements', 'Proportions'])
+        writer.writerow(compound)
